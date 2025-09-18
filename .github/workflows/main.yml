@@ -1,5 +1,6 @@
 name: Manual CI/CD - Maven Cucumber
 
+# Manual trigger in GitHub Actions
 on:
   workflow_dispatch:
 
@@ -36,3 +37,6 @@ jobs:
         with:
           name: cucumber-html-report
           path: target/cucumber-report
+
+      - name: Debug - List target files
+        run: ls -R target/
