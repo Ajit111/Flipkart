@@ -1,0 +1,33 @@
+name: Selenium Java Tests
+
+on:
+  workflow_dispatch:   # 👈 Manual trigger ke liye
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repo
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # 2. Setup JDK 11
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      # 3. Setup Maven cache (optional, fast build ke liye)
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # 4. Install dependencies & Run Tests
+      - name: Build with Maven
+        run: mvn clean install -DskipTests=false
