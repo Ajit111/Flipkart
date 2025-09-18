@@ -28,15 +28,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2
 
-      # Run Tests (generate cucumber.json)
+      # Run Tests
       - name: Run Tests
         run: mvn clean test
 
-      # Debug step - check if cucumber.json exists
-      - name: Check cucumber.json exists
+      # Debug: check json file exists
+      - name: Check cucumber.json
         run: ls -l target/cucumber.json || echo "cucumber.json not found!"
 
-      # Generate Cucumber HTML Report
+      # Generate Report
       - name: Generate Cucumber Report
         run: mvn verify
 
