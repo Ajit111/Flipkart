@@ -1,7 +1,7 @@
-name: Selenium Java Tests
+name: Selenium Java Cucumber Tests
 
 on:
-  workflow_dispatch:   # 👈 Manual trigger ke liye
+  workflow_dispatch:   # 👈 Manual run (CI/CD trigger button)
 
 jobs:
   build:
@@ -28,6 +28,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # 4. Run Tests and Generate Reports
+      # 4. Run Tests and Generate Cucumber Report
       - name: Run Tests with Maven
         run: mvn clean verify -DskipTests=false
+
+      # 5. Upload Cucumber HTML Reports as Artifact (Downloadable from GitHub Actions)
+      - name: Upload Cucumber Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-html-report
+          path: target/cucumber-reports
