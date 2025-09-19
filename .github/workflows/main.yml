@@ -25,14 +25,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Run Maven Tests (includes report generation)
+      - name: Run Maven Tests + Generate Report
         run: mvn clean verify
+
+      - name: Debug - List target files
+        run: ls -R target/
 
       - name: Upload Cucumber HTML report
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html-report
           path: target/cucumber-report
-
-      - name: Debug - List target files
-        run: ls -R target/
