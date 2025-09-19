@@ -1,4 +1,4 @@
-name: final Manual CI/CD - Maven Cucumber
+name: Manual CI/CD - Maven Cucumber
 
 on:
   workflow_dispatch: # Manual trigger
@@ -25,14 +25,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Run Maven Tests (includes report generation)
+      # ✅ यह step टेस्ट चलाएगा और cucumber.json generate करेगा
+      # ✅ verify phase में ही cucumber-report भी generate होगा (pom.xml में सेट किया है)
+      - name: Run Maven Tests + Generate Report
         run: mvn clean verify
 
-      - name: Upload Cucumber HTML report
+      # ✅ HTML cucumber report को artifact के रूप में upload करना
+      - name: Upload Cucumber HTML Report
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html-report
           path: target/cucumber-report-html
 
+      # Debugging के लिए (optional)
       - name: Debug - List target files
         run: ls -R target/
