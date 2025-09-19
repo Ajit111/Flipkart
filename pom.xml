@@ -8,33 +8,17 @@
     <artifactId>example-project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>com.Bot</name>
+    <name>example-project</name>
     <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <dependencies>
-        <!-- JUnit Jupiter for testing -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.1</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JUnit Vintage for backward compatibility -->
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <version>5.8.1</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JUnit for legacy support -->
+        <!-- JUnit 4 for Cucumber Runner -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -42,7 +26,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Cucumber for BDD testing -->
+        <!-- Cucumber -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
@@ -54,7 +38,21 @@
             <version>7.11.1</version>
         </dependency>
 
-        <!-- Rest Assured for API testing -->
+        <!-- Selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.8.1</version>
+        </dependency>
+
+        <!-- WebDriverManager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.4.1</version>
+        </dependency>
+
+        <!-- Rest Assured -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
@@ -62,21 +60,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Selenium WebDriver for browser automation -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>4.8.1</version>
-        </dependency>
-
-        <!-- WebDriverManager for managing WebDriver binaries -->
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>5.4.1</version>
-        </dependency>
-
-        <!-- Log4j for logging -->
+        <!-- Log4j -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -87,36 +71,24 @@
             <artifactId>log4j-api</artifactId>
             <version>2.17.2</version>
         </dependency>
-
-        <!-- TestNG for testing -->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.7.1</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Cucumber Reporting for generating test reports -->
-        <dependency>
-            <groupId>net.masterthought</groupId>
-            <artifactId>cucumber-reporting</artifactId>
-            <version>5.7.5</version>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Maven Surefire Plugin for test execution -->
+            <!-- Run JUnit 4 tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
+                    <includes>
+                        <include>**/RunnerTest.java</include>
+                    </includes>
                 </configuration>
             </plugin>
 
-            <!-- ✅ Fixed Cucumber Reporting Plugin -->
+            <!-- Generate HTML report from JSON -->
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
@@ -132,7 +104,6 @@
                             <projectName>Example Project</projectName>
                             <outputDirectory>${project.build.directory}/cucumber-report</outputDirectory>
                             <jsonFiles>
-                                <!-- ⚠️ Change this if your JSON is in a different location -->
                                 <param>${project.build.directory}/cucumber-reports/Cucumber.json</param>
                             </jsonFiles>
                         </configuration>
