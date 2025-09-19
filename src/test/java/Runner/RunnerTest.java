@@ -9,10 +9,9 @@ import io.cucumber.junit.CucumberOptions;
     features = "src/test/resources/features",
     glue = {"stepDefinitions"},
     plugin = {
-        "pretty",
-        "html:target/cucumber-reports/html",
-        "json:target/cucumber-reports/Cucumber.json"
-    }
+        "pretty", "json:target/cucumber-reports/Cucumber.json"
+     
+           }
 )
 public class RunnerTest {
 }
