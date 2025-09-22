@@ -25,18 +25,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # ✅ यह step टेस्ट चलाएगा और cucumber.json generate करेगा
-      # ✅ verify phase में ही cucumber-report भी generate होगा (pom.xml में सेट किया है)
       - name: Run Maven Tests + Generate Report
         run: mvn clean verify
 
-      # ✅ HTML cucumber report को artifact के रूप में upload करना
+      
       - name: Upload Cucumber HTML Report
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html-report
           path: target/cucumber-report-html
 
-      # Debugging के लिए (optional)
+    
       - name: Debug - List target files
         run: ls -R target/
